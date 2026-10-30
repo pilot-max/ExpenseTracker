@@ -34,7 +34,7 @@
         <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <!--Tab Navigasi-->
             <div class="border-b border-gray-200 dark:border-gray-700 mb-6">
-                <nav class="-mb-px flex space-x-8">
+                <nav class="-mb-px flex gap-4 sm:gap-8 overflow-x-auto">
                     <button @click="activeTab = 'dashboard'"
                             :class="activeTab === 'dashboard' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
                             class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors">
@@ -50,10 +50,14 @@
                             class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors">
                         {{ t('categories') }}
                     </button>
+                    <button @click="activeTab = 'budgets'"
+                        :class="activeTab === 'budgets' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400'"
+                        class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm">Budgets</button>
                 </nav>
             </div>
 
             <!--Konten Tab-->
+            <Budgets v-if="activeTab === 'budgets'" :currency="currentCurrency" />
             <div v-if="activeTab === 'dashboard'">
                 <Dashboard :currency="currentCurrency"/>
             </div>
@@ -74,6 +78,7 @@
 import {onMounted, ref} from "vue";
 import Dashboard from "./components/Dashboard.vue";
 import Transactions from "./components/Transaction.vue";
+import Budgets from "./components/Budgets.vue";
 import Categories from "./components/Categories.vue";
 import { t } from './utils/i18n.js';
 
