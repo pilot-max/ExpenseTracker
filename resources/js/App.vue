@@ -22,7 +22,7 @@
                         
                         <select v-model="currentCurrency" @change="changeCurrency"
                                 class="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
-                            <option value="IDR">IDR (Rp)</option>
+                            <option value="CAD">CAD (CA$)</option>
                             <option value="USD">USD ($)</option>
                         </select>
                     </div>
@@ -75,10 +75,10 @@ import {onMounted, ref} from "vue";
 import Dashboard from "./components/Dashboard.vue";
 import Transactions from "./components/Transaction.vue";
 import Categories from "./components/Categories.vue";
-import { t, setLanguage } from './utils/i18n.js';
+import { t } from './utils/i18n.js';
 
 const activeTab = ref('dashboard')
-const currentCurrency = ref('IDR')
+const currentCurrency = ref('USD')
 const isDarkMode = ref(false)
 
 const changeCurrency = async () => {
@@ -92,10 +92,8 @@ const changeCurrency = async () => {
                 default_currency: currentCurrency.value,
             })
         })
-        // Update language based on currency
-        setLanguage(currentCurrency.value)
     } catch (error) {
-        console.error("Gagal untuk memperbarui Kurensi", error);
+        console.error("Unable to update currency", error);
     }
 }
 
@@ -122,11 +120,9 @@ const loadSettings = async () => {
         const data = await response.json()
         if (data.success) {
             currentCurrency.value = data.data.default_currency
-            // Set language based on loaded currency
-            setLanguage(currentCurrency.value)
         }
     } catch (error) {
-        console.error('Gagal untuk memperbarui Setting:', error)
+        console.error('Unable to update settings:', error)
     }
 }
 
